@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "304214173886",
+    "firebase_url": "https://salads-d900d.firebaseio.com",
+    "project_id": "salads-d900d",
+    "storage_bucket": "salads-d900d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:304214173886:android:655ff409d87daf2a",
+        "android_client_info": {
+          "package_name": "com.kan.salads"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "304214173886-i0f0ftflk6772u4hlhu8kvnpqa2krmjn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kan.salads",
+            "certificate_hash": "ebd54c2a6e1eb118c180b763a3837f7d35a2d9e9"
+          }
+        },
+        {
+          "client_id": "304214173886-b5dcrvidsvghjjcpt3pr96a2bkc5bj55.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMJLQ06H6Ea70vCJt9P-8CujdGbxVUwAk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "304214173886-b5dcrvidsvghjjcpt3pr96a2bkc5bj55.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

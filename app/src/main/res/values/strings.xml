@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">salads</string>
+    <string name="app_name">Salads</string>
+    <string name="login_with_google">Login with Google</string>
+    <string name="login_heading">Login to Salads</string>
+    <string name="login_with_facebook">Login with Facebook</string>
+    <string name="connection_failed">Connection Failed</string>
+    <string name="logout">Logout</string>
+
 </resources>

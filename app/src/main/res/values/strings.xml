@@ -1,9 +1,14 @@
 <resources>
-    <string name="app_name">Salads</string>
+    <string name="app_name">So many Salads!</string>
     <string name="login_with_google">Login with Google</string>
-    <string name="login_heading">Login to Salads</string>
+    <string name="login_heading">Sign up now to order your first fresh salad!</string>
     <string name="login_with_facebook">Login with Facebook</string>
     <string name="connection_failed">Connection Failed</string>
     <string name="logout">Logout</string>
-
+    <string name="login_with_twitter">Login with Twitter</string>
+    <string name="login_anonymous">Continue without signing in</string>
+    <string name="home_heading">Welcome to 365 Salads</string>
+    <string name="buy">Buy something</string>
+    <string name="com.twitter.sdk.android.CONSUMER_KEY">WeXethiaSP8sFWXBITxDnv9Tk</string>
+    <string name="com.twitter.sdk.android.CONSUMER_SECRET">l4LnU5nMRH0ROY05LG4TuK8GFd1bwQtk9QrvRP9JvSRUHyxWjR</string>
 </resources>

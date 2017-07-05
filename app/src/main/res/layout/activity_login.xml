@@ -4,7 +4,7 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".LoginActivityLoginLoginTwitterActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -21,7 +21,7 @@
             android:paddingBottom="32dp">
 
             <TextView
-                style="@style/Base.TextAppearance.AppCompat.Headline"
+                style="@style/Base.TextAppearance.AppCompat.Caption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -37,36 +37,52 @@
 
             <Button
                 android:id="@+id/button_login_with_google"
-                style="@style/Widget.AppCompat.Button.Colored"
-                android:layout_width="wrap_content"
+                style="@style/Salads.Button.Login"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="16dp"
+                android:background="@color/google"
+                android:drawableLeft="@drawable/google"
                 android:text="@string/login_with_google" />
-
-
-            <!--<com.google.android.gms.common.SignInButton-->
-                <!--android:id="@+id/button_login_with_google"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content" />-->
 
             <Button
                 android:id="@+id/button_login_with_facebook"
-                style="@style/Widget.AppCompat.Button.Colored"
-                android:layout_width="wrap_content"
+                style="@style/Salads.Button.Login"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="16dp"
+                android:background="@color/facebook"
+                android:drawableLeft="@drawable/facebook"
                 android:text="@string/login_with_facebook" />
+
+            <!--<com.twitter.sdk.android.core.identity.TwitterLoginButton-->
+                <!--android:id="@+id/button_login_with_twitter"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_margin="8dp" />-->
+            <!---->
+            <Button
+                android:id="@+id/button_login_with_twitter"
+                style="@style/Salads.Button.Login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/twitter"
+                android:drawableLeft="@drawable/twitter"
+                android:text="@string/login_with_twitter" />
+
+            <Button
+                android:id="@+id/button_login_anonymous"
+                style="@style/Salads.Button.Login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/grey"
+                android:text="@string/login_anonymous" />
 
             <Button
                 android:id="@+id/button_logout"
-                style="@style/Widget.AppCompat.Button.Colored"
+                style="@style/Salads.Button.Login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="16dp"
-                android:text="@string/logout" />
+                android:text="@string/logout"
+                android:visibility="gone" />
 
         </LinearLayout>
 

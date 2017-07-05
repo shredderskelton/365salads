@@ -8,4 +8,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="Salads.Button.Login" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:drawablePadding">@dimen/drawablePadding</item>
+        <item name="android:paddingLeft">@dimen/drawablePadding</item>
+        <item name="android:layout_margin">8dp</item>
+    </style>
+
 </resources>

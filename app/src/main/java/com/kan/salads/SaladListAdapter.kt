@@ -6,19 +6,23 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.google.firebase.auth.FirebaseAuth
-import com.kan.salads.model.Salad
-import com.kan.salads.model.ShoppingCart
 import kotlinx.android.synthetic.main.list_layout.view.*
 
-class SaladListAdapter(var context: Context, var lists: MutableList<Salad>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class SaladListAdapter(var context: Context, var items: MutableList<ShoppingCartItemViewModel>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    var onItemSelected: (itemId:String) -> Unit = {
+        println("In adapter")
+    }
+    var onItemDeSelected: (itemId:String) -> Unit = {}
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
-        (holder as ViewHolder).bind(lists[position])
+        val viewHolder = (holder as ViewHolder)
+        viewHolder.onItemDeSelected = onItemDeSelected
+        viewHolder.onItemSelected = onItemSelected
+        viewHolder.bind(items[position])
     }
 
     override fun getItemCount(): Int {
-        return lists.size
+        return items.size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
@@ -26,22 +30,48 @@ class SaladListAdapter(var context: Context, var lists: MutableList<Salad>) : Re
         return ViewHolder(view)
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var selected = false
-        val shoppingCart = ShoppingCart()
+    fun setNewItems(newItems: List<ShoppingCartItemViewModel>){
+        this.items.clear()
+        this.items.addAll(newItems)
+        notifyDataSetChanged()
+    }
 
-        fun bind(item: Salad) {
-            itemView.textView.text = item.name
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private var itemViewModel: ShoppingCartItemViewModel? = null
+
+        fun bind(item: ShoppingCartItemViewModel) {
+            itemViewModel = item
+            itemView.textView.text = item.salad.name
+            if (item.selected) {
+                setSelected()
+            } else {
+                setDeSelected()
+            }
             itemView.setOnClickListener {
-                selected = !selected
-                if (selected) {
-                    shoppingCart.addItem(FirebaseAuth.getInstance().currentUser!!.uid, item.uuid)
-                    itemView.textView.typeface = Typeface.DEFAULT_BOLD
-                } else {
-                    shoppingCart.removeItem(FirebaseAuth.getInstance().currentUser!!.uid, item.uuid)
-                    itemView.textView.typeface = Typeface.DEFAULT
-                }
+                onClicked(item)
             }
         }
+
+        private fun onClicked(item: ShoppingCartItemViewModel) {
+            if (item.selected) {
+                onItemDeSelected(item.salad.uuid)
+                setDeSelected()
+            } else {
+                onItemSelected(item.salad.uuid)
+                setSelected()
+            }
+            item.selected = !item.selected
+        }
+
+        private fun setDeSelected() {
+            itemView.textView.typeface = Typeface.DEFAULT
+        }
+
+        private fun setSelected() {
+            itemView.textView.typeface = Typeface.DEFAULT_BOLD
+        }
+
+        var onItemSelected: (itemId: String) -> Unit = {println("In viewholder")}
+        var onItemDeSelected: (itemId: String) -> Unit = {}
     }
 }

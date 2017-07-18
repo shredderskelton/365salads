@@ -3,6 +3,7 @@ package com.kan.salads
 import android.content.Intent
 import android.os.Bundle
 import com.google.firebase.auth.TwitterAuthProvider
+import com.kan.salads.activity.login.LoginFacebookActivity
 import com.twitter.sdk.android.core.Result
 import com.twitter.sdk.android.core.TwitterException
 import com.twitter.sdk.android.core.TwitterSession

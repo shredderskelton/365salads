@@ -1,4 +1,4 @@
-package com.kan.salads
+package com.kan.salads.activity.login
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,6 +9,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.auth.api.signin.GoogleSignInResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.GoogleAuthProvider
+import com.kan.salads.LoginTwitterActivity
+import com.kan.salads.R
 
 
 abstract class LoginGoogleActivity : LoginTwitterActivity() {

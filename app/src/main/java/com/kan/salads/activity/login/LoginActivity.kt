@@ -1,4 +1,4 @@
-package com.kan.salads
+package com.kan.salads.activity.login
 
 import android.content.Context
 import android.content.Intent
@@ -6,8 +6,8 @@ import android.os.Bundle
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.kan.salads.R
 import kotlinx.android.synthetic.main.activity_login.*
-
 
 class LoginActivity : LoginGoogleActivity() {
 

@@ -1,4 +1,4 @@
-package com.kan.salads
+package com.kan.salads.activity.login
 
 import android.support.v7.app.AppCompatActivity
 import com.google.firebase.auth.AuthCredential

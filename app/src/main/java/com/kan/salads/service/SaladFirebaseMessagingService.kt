@@ -8,8 +8,8 @@ import android.support.v4.app.TaskStackBuilder
 import android.support.v7.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import com.kan.salads.HomeActivity
 import com.kan.salads.R
+import com.kan.salads.activity.home.HomeActivity
 
 class SaladFirebaseMessagingService : FirebaseMessagingService() {
     override fun onMessageReceived(remoteMessage: RemoteMessage?) {
@@ -28,7 +28,8 @@ class SaladFirebaseMessagingService : FirebaseMessagingService() {
                 PendingIntent.FLAG_UPDATE_CURRENT
         )
         mBuilder.setContentIntent(resultPendingIntent)
-        val mNotificationManager = this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val mNotificationManager = this.getSystemService(Context.NOTIFICATION_SERVICE)
+                as NotificationManager
 
         mNotificationManager.notify(123, mBuilder.build())
     }

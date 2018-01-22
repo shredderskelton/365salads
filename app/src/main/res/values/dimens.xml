@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="drawablePadding">5dp</dimen>
+
+    <dimen name="rhythmFraction">2dp</dimen>
+    <dimen name="rhythmSixteenth">4dp</dimen>
+    <dimen name="rhythmEighth">8dp</dimen>
+    <dimen name="rhythmQuarter">16dp</dimen>
+    <dimen name="rhythmHalf">32dp</dimen>
+    <dimen name="rhythm">64dp</dimen>
 </resources>

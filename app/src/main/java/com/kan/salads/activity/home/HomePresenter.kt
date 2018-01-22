@@ -9,19 +9,16 @@ import com.kan.salads.ShoppingCartItemViewModel
 import com.kan.salads.model.Salad
 import com.kan.salads.model.UserDataHandler
 
-const val CURRENTUSERS = "currentUsers"
+const val currentUsersNotificationKey = "currentUsers"
 
 class HomePresenter(val view: HomeView, context: Context) {
-    private val firebaseAuth: FirebaseAuth
-    private val firebaseData: DatabaseReference
-    private val firebaseAnalytics: FirebaseAnalytics
+    private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
+    private val firebaseData: DatabaseReference = FirebaseDatabase.getInstance().reference
+    private val firebaseAnalytics: FirebaseAnalytics = FirebaseAnalytics.getInstance(context)
     private val userDataHandler: UserDataHandler
     private val availableSalads: MutableList<Salad> = mutableListOf()
 
     init {
-        firebaseAuth = FirebaseAuth.getInstance()
-        firebaseData = FirebaseDatabase.getInstance().reference
-        firebaseAnalytics = FirebaseAnalytics.getInstance(context)
         userDataHandler = UserDataHandler({ newData: HashSet<String> -> updateData(newData) })
     }
 
@@ -76,11 +73,15 @@ class HomePresenter(val view: HomeView, context: Context) {
 
     fun start() {
         updateUI()
-        FirebaseMessaging.getInstance().subscribeToTopic(CURRENTUSERS)
+        FirebaseMessaging
+                .getInstance()
+                .subscribeToTopic(currentUsersNotificationKey)
     }
 
     fun stop() {
-        FirebaseMessaging.getInstance().unsubscribeFromTopic(CURRENTUSERS)
+        FirebaseMessaging
+                .getInstance()
+                .unsubscribeFromTopic(currentUsersNotificationKey)
     }
 
     fun onLoginClicked() {

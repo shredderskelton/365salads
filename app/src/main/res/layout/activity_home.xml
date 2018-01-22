@@ -1,71 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="@dimen/rhythmEighth"
     tools:context="com.kan.salads.activity.home.HomeActivity">
 
     <ScrollView
-        android:layout_width="368dp"
-        android:layout_height="495dp"
-        tools:layout_editor_absoluteY="8dp"
-        tools:layout_editor_absoluteX="8dp">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
 
-        <LinearLayout
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp"
-            android:layout_marginTop="16dp"
-            android:orientation="vertical"
-            android:paddingBottom="32dp">
+            android:orientation="vertical">
 
             <TextView
+                android:id="@+id/titleTextView"
                 style="@style/Base.TextAppearance.AppCompat.Caption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:drawableTop="@drawable/firebase_auth_120dp"
-                android:text="@string/home_heading" />
+                android:text="@string/home_heading"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/text_log"
+                android:id="@+id/logTextView"
                 style="@style/Base.TextAppearance.AppCompat.Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/titleTextView"
+                tools:text="This is a log" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <Button
+                android:id="@+id/buyButton"
+                style="@style/Salads.Button.Login"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:text="@string/buy"
+                app:layout_constraintEnd_toStartOf="@+id/logoutButton"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/logTextView" />
 
-                <Button
-                    android:id="@+id/button_buy"
-                    style="@style/Salads.Button.Login"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/buy" />
-
-                <Button
-                    android:id="@+id/button_logout"
-                    style="@style/Salads.Button.Login"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/logout" />
-            </LinearLayout>
+            <Button
+                android:id="@+id/logoutButton"
+                style="@style/Salads.Button.Login"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/logout"
+                app:layout_constraintBottom_toBottomOf="@+id/buyButton"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/buyButton"
+                app:layout_constraintTop_toTopOf="@+id/buyButton" />
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/home_recycle_view"
+                android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/rhythmQuarter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/buyButton" />
 
 
-        </LinearLayout>
+        </android.support.constraint.ConstraintLayout>
 
     </ScrollView>
 
-</android.support.constraint.ConstraintLayout>
+</FrameLayout>

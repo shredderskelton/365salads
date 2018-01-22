@@ -29,7 +29,7 @@
                 android:text="@string/login_heading" />
 
             <TextView
-                android:id="@+id/text_log"
+                android:id="@+id/logTextView"
                 style="@style/Base.TextAppearance.AppCompat.Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -77,7 +77,7 @@
                 android:text="@string/login_anonymous" />
 
             <Button
-                android:id="@+id/button_logout"
+                android:id="@+id/logoutButton"
                 style="@style/Salads.Button.Login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

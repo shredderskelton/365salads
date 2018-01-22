@@ -22,7 +22,7 @@ class LoginActivity : LoginGoogleActivity() {
         button_login_anonymous.setOnClickListener {
             finish()
         }
-        button_logout.setOnClickListener { firebaseAuth.signOut() }
+        logoutButton.setOnClickListener { firebaseAuth.signOut() }
 
         firebaseAuth = FirebaseAuth.getInstance()
     }
@@ -39,13 +39,13 @@ class LoginActivity : LoginGoogleActivity() {
                     } else {
                         val exception = task.exception
                         if (exception == null) {
-                            text_log.text = "Firebase Authorisation Failed: Unknown reason"
+                            logTextView.text = "Firebase Authorisation Failed: Unknown reason"
                             return@addOnCompleteListener
                         }
                         if (exception is FirebaseAuthUserCollisionException) {
                             signInNewUser(credential)
                         } else {
-                            text_log.text = "Firebase Authorisation Failed: ${exception.localizedMessage}"
+                            logTextView.text = "Firebase Authorisation Failed: ${exception.localizedMessage}"
                         }
                     }
                 }
@@ -59,20 +59,20 @@ class LoginActivity : LoginGoogleActivity() {
                     } else {
                         val exception = task.exception
                         if (exception == null) {
-                            text_log.text = "Firebase Authorisation Failed: Unknown reason"
+                            logTextView.text = "Firebase Authorisation Failed: Unknown reason"
                             return@addOnCompleteListener
                         }
                         if (exception is FirebaseAuthUserCollisionException) {
-                            text_log.text = "Someone with this email has already created an account, please try a different login method"
+                            logTextView.text = "Someone with this email has already created an account, please try a different login method"
                         } else {
-                            text_log.text = "Firebase Authorisation Failed: ${exception.localizedMessage}"
+                            logTextView.text = "Firebase Authorisation Failed: ${exception.localizedMessage}"
                         }
                     }
                 }
     }
 
     override fun onError(errorMessage: String) {
-        text_log.setText(errorMessage)
+        logTextView.setText(errorMessage)
     }
 }
 

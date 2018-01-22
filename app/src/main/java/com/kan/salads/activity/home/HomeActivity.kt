@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.widget.Toast
 import com.kan.salads.R
 import com.kan.salads.SaladListAdapter
@@ -21,7 +22,7 @@ class HomeActivity : AppCompatActivity(), HomeView {
     }
 
     override fun setSelectedCartCount(selectedCount: Int) {
-        button_buy.text = "Buy ${selectedCount} items"
+        buyButton.text = "Buy ${selectedCount} items"
     }
 
     override fun setShoppingCartItems(items: List<ShoppingCartItemViewModel>) {
@@ -30,14 +31,14 @@ class HomeActivity : AppCompatActivity(), HomeView {
 
     override fun setIsLoggedInAnonymously() {
         updateUIanonymous()
-        button_logout.setOnClickListener {
+        logoutButton.setOnClickListener {
             presenter.onLoginClicked()
         }
     }
 
     override fun setIsLoggedInAsUser(userName: String) {
         updateUIloggedIn(userName)
-        button_logout.setOnClickListener {
+        logoutButton.setOnClickListener {
             presenter.onLogoutClicked()
         }
     }
@@ -49,7 +50,7 @@ class HomeActivity : AppCompatActivity(), HomeView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        button_buy.setOnClickListener {
+        buyButton.setOnClickListener {
             presenter.onBuyClicked()
         }
 //        button_buy.setOnLongClickListener {
@@ -58,10 +59,10 @@ class HomeActivity : AppCompatActivity(), HomeView {
 //            false
 //        }
         presenter = HomePresenter(this, this)
-        home_recycle_view.layoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = LinearLayoutManager(this)
         adapter.onItemSelected = presenter::onItemSelected
         adapter.onItemDeSelected = presenter::onItemDeSelected
-        home_recycle_view.adapter = adapter
+        recyclerView.adapter = adapter
     }
 
     override fun onStart() {
@@ -75,13 +76,13 @@ class HomeActivity : AppCompatActivity(), HomeView {
     }
 
     private fun updateUIloggedIn(currentUser: String) {
-        text_log.text = "${currentUser}"
-        button_logout.text = "Logout"
+        logTextView.text = "${currentUser}"
+        logoutButton.text = "Logout"
     }
 
     private fun updateUIanonymous() {
-        text_log.text = "Signed in Anonymously"
-        button_logout.text = "Login"
+        logTextView.text = "Signed in Anonymously"
+        logoutButton.text = "Login"
     }
 }
 

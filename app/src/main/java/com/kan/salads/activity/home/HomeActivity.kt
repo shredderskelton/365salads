@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.widget.Toast
 import com.kan.salads.R
 import com.kan.salads.SaladListAdapter
@@ -53,16 +53,29 @@ class HomeActivity : AppCompatActivity(), HomeView {
         buyButton.setOnClickListener {
             presenter.onBuyClicked()
         }
+
 //        button_buy.setOnLongClickListener {
 //            val primer = DatabasePrimer()
 //            primer.loadDatabase(firebaseData)
 //            false
 //        }
+
         presenter = HomePresenter(this, this)
         recyclerView.layoutManager = LinearLayoutManager(this)
         adapter.onItemSelected = presenter::onItemSelected
         adapter.onItemDeSelected = presenter::onItemDeSelected
         recyclerView.adapter = adapter
+
+
+        val mes = intent?.extras?.getString("message") ?: "Nuttin"
+        Log.d("Home", mes)
+
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        val mes = intent?.extras?.getString("message") ?: "Nuttin"
+        Log.d("Home", mes)
     }
 
     override fun onStart() {

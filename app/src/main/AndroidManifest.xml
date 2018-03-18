@@ -21,7 +21,36 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.login.LoginActivity"></activity>
+        <activity
+            android:name=".activity.saladdetails.SaladDetailActivity"
+            android:parentActivityName=".activity.home.HomeActivity"
+            android:theme="@style/AppTheme.Details">
+            <intent-filter android:label="@string/filter_view_http_salads">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="www.kan.com"
+                    android:pathPrefix="/salads"
+                    android:scheme="http" />
+                <!-- note that the leading "/" is required for pathPrefix-->
+            </intent-filter>
+            <intent-filter android:label="@string/filter_view_kan_salads">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="salads"
+                    android:scheme="kan" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.login.LoginActivity">
+
+        </activity>
 
         <service
             android:exported="false"

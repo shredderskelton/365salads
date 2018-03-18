@@ -2,6 +2,11 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
+static def evalVersionCode() {
+    def process = "git rev-list --all --count".execute()
+    return process.text.toInteger()
+}
+
 android {
     compileSdkVersion 27
     buildToolsVersion "27.0.3"
@@ -9,13 +14,35 @@ android {
         applicationId "com.kan.salads"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+        versionCode evalVersionCode()
+        versionName "1.0.${evalVersionCode()}"
     }
+
+    signingConfigs {
+        debug {
+            keyAlias "debug-alias"
+            keyPassword "password"
+            storeFile file("../signing/debug/keystore.debug.jks")
+            storePassword "password"
+        }
+        release {
+            keyAlias project.hasProperty("keyAlias") ? project["keyAlias"] : "false"
+            keyPassword project.hasProperty("keyPassword") ? project["keyPassword"] : "false"
+            storeFile file(project.hasProperty("storeFile") ? project["storeFile"] : "../signing/debug/keystore.debug.jks")
+            storePassword project.hasProperty("storePassword") ? project["storePassword"] : "false"
+        }
+    }
+
     buildTypes {
+        debug {
+            applicationIdSuffix = ".debug"
+            debuggable = true
+            signingConfig signingConfigs.debug
+        }
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            signingConfig signingConfigs.release
         }
     }
 
@@ -33,13 +60,16 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-core:11.8.0'
     implementation 'com.google.firebase:firebase-messaging:11.8.0'
-
+    implementation 'com.google.firebase:firebase-invites:11.8.0'
     implementation 'com.google.firebase:firebase-auth:11.8.0'
     implementation 'com.google.firebase:firebase-database:11.8.0'
     implementation 'com.google.android.gms:play-services-auth:11.8.0'
 
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation 'com.twitter.sdk.android:twitter:3.0.0'
+
+    implementation "com.jakewharton.timber:timber:4.6.0"
+    implementation "com.squareup.picasso:picasso:2.5.2"
 }
 repositories {
     mavenCentral()

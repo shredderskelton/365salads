@@ -12,7 +12,7 @@ class SaladListAdapter(private var context: Context, private var items: MutableL
     }
     var onItemDeSelected: (itemId:String) -> Unit = {}
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val viewHolder = (holder as SaladViewHolder)
         viewHolder.onItemDeSelected = onItemDeSelected
         viewHolder.onItemSelected = onItemSelected
@@ -23,7 +23,7 @@ class SaladListAdapter(private var context: Context, private var items: MutableL
         return items.size
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.list_layout, parent, false)
         return SaladViewHolder(view)
     }

@@ -15,11 +15,71 @@
       },
       "oauth_client": [
         {
+          "client_id": "304214173886-g7hcflevssvur80be9t05f9ccec6j0al.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kan.salads",
+            "certificate_hash": "d41e371a3f668255110777fb59ce271013c2ee45"
+          }
+        },
+        {
           "client_id": "304214173886-i0f0ftflk6772u4hlhu8kvnpqa2krmjn.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.kan.salads",
             "certificate_hash": "ebd54c2a6e1eb118c180b763a3837f7d35a2d9e9"
+          }
+        },
+        {
+          "client_id": "304214173886-b5dcrvidsvghjjcpt3pr96a2bkc5bj55.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMJLQ06H6Ea70vCJt9P-8CujdGbxVUwAk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "304214173886-b5dcrvidsvghjjcpt3pr96a2bkc5bj55.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:304214173886:android:ee7d6df41fccfbd3",
+        "android_client_info": {
+          "package_name": "com.kan.salads.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "304214173886-5jjqs1h5lhq2om1h922rsq4u917agtr7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kan.salads.debug",
+            "certificate_hash": "d41e371a3f668255110777fb59ce271013c2ee45"
+          }
+        },
+        {
+          "client_id": "304214173886-v0bkqbfqoqd6461tqkc6nodon06and4t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kan.salads.debug",
+            "certificate_hash": "3b8582a17ed619ca769378994a52c4a43f7ef9f1"
           }
         },
         {

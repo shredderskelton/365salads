@@ -1,6 +1,6 @@
 package com.kan.salads.activity.home
 
-import android.content.Context
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -11,21 +11,31 @@ import com.kan.salads.R
 import com.kan.salads.SaladListAdapter
 import com.kan.salads.ShoppingCartItemViewModel
 import com.kan.salads.activity.login.LoginActivityIntent
+import com.kan.salads.activity.saladdetails.SaladDetailActivity
 import kotlinx.android.synthetic.main.activity_home.*
+import java.util.*
 
 class HomeActivity : AppCompatActivity(), HomeView {
     private lateinit var presenter: HomePresenter
-    val adapter = SaladListAdapter(this, mutableListOf())
+    private val adapter = SaladListAdapter(this, mutableListOf())
+    var lastItem: ShoppingCartItemViewModel? = null
 
     override fun showNotImplemented() {
         Toast.makeText(this, "Sorry this is not yet implemented", Toast.LENGTH_SHORT).show()
+
     }
 
+    @SuppressLint("SetTextI18n")
     override fun setSelectedCartCount(selectedCount: Int) {
-        buyButton.text = "Buy ${selectedCount} items"
+        buyButton.text = "Buy $selectedCount items"
     }
 
     override fun setShoppingCartItems(items: List<ShoppingCartItemViewModel>) {
+        if (items.isNotEmpty()) {
+            val seconds = Calendar.getInstance().get(Calendar.SECOND)
+            val index = seconds % items.size
+            lastItem = items[index]
+        }
         adapter.setNewItems(items)
     }
 
@@ -47,6 +57,11 @@ class HomeActivity : AppCompatActivity(), HomeView {
         startActivity(LoginActivityIntent())
     }
 
+    fun startDetails() {
+        lastItem?.let {
+            SaladDetailActivity.start(this, it.salad.uuid)
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -54,11 +69,13 @@ class HomeActivity : AppCompatActivity(), HomeView {
             presenter.onBuyClicked()
         }
 
-//        button_buy.setOnLongClickListener {
+        buyButton.setOnLongClickListener {
+            startDetails()
+            true
 //            val primer = DatabasePrimer()
 //            primer.loadDatabase(firebaseData)
 //            false
-//        }
+        }
 
         presenter = HomePresenter(this, this)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -99,8 +116,3 @@ class HomeActivity : AppCompatActivity(), HomeView {
     }
 }
 
-fun Context.HomeActivityIntent(): Intent {
-    return Intent(this, HomeActivity::class.java).apply {
-        //        putExtra(INTENT_USER_ID, user.id)
-    }
-}

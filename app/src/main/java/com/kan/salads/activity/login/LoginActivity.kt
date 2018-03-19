@@ -1,7 +1,5 @@
 package com.kan.salads.activity.login
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
@@ -73,11 +71,5 @@ class LoginActivity : LoginGoogleActivity() {
 
     override fun onError(errorMessage: String) {
         logTextView.setText(errorMessage)
-    }
-}
-
-fun Context.LoginActivityIntent(): Intent {
-    return Intent(this, LoginActivity::class.java).apply {
-        //        putExtra(INTENT_USER_ID, user.id)
     }
 }

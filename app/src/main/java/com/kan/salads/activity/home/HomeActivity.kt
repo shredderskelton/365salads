@@ -10,8 +10,8 @@ import android.widget.Toast
 import com.kan.salads.R
 import com.kan.salads.SaladListAdapter
 import com.kan.salads.ShoppingCartItemViewModel
-import com.kan.salads.activity.login.LoginActivityIntent
-import com.kan.salads.activity.saladdetails.SaladDetailActivity
+import com.kan.salads.activity.login.LoginActivityArgs
+import com.kan.salads.activity.saladdetails.SaladDetailActivityArgs
 import kotlinx.android.synthetic.main.activity_home.*
 import java.util.*
 
@@ -54,14 +54,15 @@ class HomeActivity : AppCompatActivity(), HomeView {
     }
 
     override fun showLoginActivity() {
-        startActivity(LoginActivityIntent())
+        LoginActivityArgs().launch(this)
     }
 
     fun startDetails() {
         lastItem?.let {
-            SaladDetailActivity.start(this, it.salad.uuid)
+            SaladDetailActivityArgs(it.salad.uuid).launch(this)
         }
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)

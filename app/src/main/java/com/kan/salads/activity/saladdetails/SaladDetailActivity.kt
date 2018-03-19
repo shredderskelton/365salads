@@ -1,7 +1,5 @@
 package com.kan.salads.activity.saladdetails
 
-import android.content.Context
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -20,7 +18,6 @@ import timber.log.Timber
 class SaladDetailActivity : AppCompatActivity(), SaladDetailPresenter.SaladDetailView {
 
     companion object {
-        private const val SALAD_ID_EXTRA = "saladId"
 
         const val DYNAMIC_LINK_DOMAIN = "ude3d.app.goo.gl"
         private const val QUERY_PARAM_REFERRER = "referrer"
@@ -28,28 +25,6 @@ class SaladDetailActivity : AppCompatActivity(), SaladDetailPresenter.SaladDetai
         private const val PATH = "salads"
         private const val AUTH_DOMAIN = "kan.com"
         private const val SCHEME = "http"
-
-        fun start(context: Context, uuid: String) {
-            val intent = Intent(context, SaladDetailActivity::class.java)
-            intent.putExtra(SALAD_ID_EXTRA, uuid)
-            context.startActivity(intent)
-        }
-
-        private fun extractSaladId(intent: Intent): String {
-            if (intent.hasExtra(SALAD_ID_EXTRA)) {
-                Timber.d("Intent: $intent")
-                return intent.extras[SALAD_ID_EXTRA].toString()
-            }
-            if (AppInviteReferral.hasReferral(intent)) {
-                val link = AppInviteReferral.getDeepLink(intent)
-                Timber.d("Deep Link: $link")
-                val uri = Uri.parse(link)
-                val salad = uri.getQueryParameter(QUERY_PARAM_SALAD)
-                val referrer = uri.getQueryParameter(QUERY_PARAM_REFERRER)
-                return salad
-            }
-            return ""
-        }
 
         fun createShareUri(saladId: String, userId: String?): Uri {
             val builder = Uri.Builder()
@@ -69,13 +44,32 @@ class SaladDetailActivity : AppCompatActivity(), SaladDetailPresenter.SaladDetai
 
     private lateinit var presenter: SaladDetailPresenter
 
+    private var referrer: String? = null
+
+    private val args by lazy {
+        SaladDetailActivityArgs.deserializeFrom(intent)
+    }
+
+    @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_details)
-        val id = extractSaladId(intent)
-        presenter = SaladDetailPresenter(this, id)
+
+        val saladId = if (AppInviteReferral.hasReferral(intent)) {
+            val link = AppInviteReferral.getDeepLink(intent)
+            Timber.d("Deep Link: $link")
+            val uri = Uri.parse(link)
+            referrer = uri.getQueryParameter(QUERY_PARAM_REFERRER)
+            val salad = uri.getQueryParameter(QUERY_PARAM_SALAD)
+            salad
+        } else {
+            args.saladId
+        }
+
+        presenter = SaladDetailPresenter(this, saladId)
+
         fab.setOnClickListener {
-            share(id)
+            share(args.saladId)
         }
 
 //        ViewCompat.setOnApplyWindowInsetsListener(contentText) { v, insets ->
@@ -84,7 +78,7 @@ class SaladDetailActivity : AppCompatActivity(), SaladDetailPresenter.SaladDetai
 //        }
     }
 
-    fun share(id: String) {
+    private fun share(id: String) {
         val myUri = createShareUri(id)
         Timber.d("Shared Link: $myUri")
 

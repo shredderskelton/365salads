@@ -3,7 +3,7 @@ package com.kan.salads.activity.saladdetails
 import com.google.firebase.database.*
 import com.kan.salads.model.Salad
 
-class SaladDetailPresenter(val view: SaladDetailView, val saladId: String) {
+class SaladDetailPresenter(val view: SaladDetailView, saladId: String) {
     private val firebaseData: DatabaseReference = FirebaseDatabase.getInstance().reference
 
     init {
@@ -27,5 +27,4 @@ class SaladDetailPresenter(val view: SaladDetailView, val saladId: String) {
         fun setTitle(text: String)
         fun setImage(imageUrl: String)
     }
-
 }

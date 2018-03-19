@@ -2,6 +2,7 @@ package com.kan.salads.activity.saladdetails
 
 import com.google.firebase.database.*
 import com.kan.salads.model.Salad
+import timber.log.Timber
 
 class SaladDetailPresenter(val view: SaladDetailView, saladId: String) {
     private val firebaseData: DatabaseReference = FirebaseDatabase.getInstance().reference
@@ -9,11 +10,13 @@ class SaladDetailPresenter(val view: SaladDetailView, saladId: String) {
     init {
         val listener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                //TODO fail log
-                val salad: Salad = dataSnapshot.getValue<Salad>(Salad::class.java)
-                        ?: return
-                view.setTitle(salad.name)
-                view.setImage(salad.photo)
+
+                val salad = dataSnapshot.getValue<Salad>(Salad::class.java)
+                if (salad == null) Timber.e("Failed to serialise the salad")
+                salad?.let {
+                    view.setTitle(it.name)
+                    view.setImage(it.photo)
+                }
             }
 
             override fun onCancelled(databaseError: DatabaseError) {

@@ -46,6 +46,10 @@ android {
         }
     }
 
+    lintOptions {
+        abortOnError false
+    }
+
     dexOptions {
         javaMaxHeapSize "12g"
     }

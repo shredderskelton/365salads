@@ -32,9 +32,9 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="kan.com"
+                    android:host="@string/config_host"
                     android:pathPrefix="/salads"
-                    android:scheme="http" />
+                    android:scheme="@string/config_scheme" />
                 <!-- note that the leading "/" is required for pathPrefix-->
             </intent-filter>
         </activity>

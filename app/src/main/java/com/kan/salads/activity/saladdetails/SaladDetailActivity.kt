@@ -17,30 +17,9 @@ import timber.log.Timber
 
 class SaladDetailActivity : AppCompatActivity(), SaladDetailPresenter.SaladDetailView {
 
-    companion object {
-
-        const val DYNAMIC_LINK_DOMAIN = "ude3d.app.goo.gl"
-        private const val QUERY_PARAM_REFERRER = "referrer"
-        private const val QUERY_PARAM_SALAD = "saladId"
-        private const val PATH = "salads"
-        private const val AUTH_DOMAIN = "kan.com"
-        private const val SCHEME = "http"
-
-        fun createShareUri(saladId: String, userId: String?): Uri {
-            val builder = Uri.Builder()
-            builder.scheme(SaladDetailActivity.SCHEME)
-                    .authority(SaladDetailActivity.AUTH_DOMAIN)
-                    .appendPath(SaladDetailActivity.PATH)
-                    .appendQueryParameter(SaladDetailActivity.QUERY_PARAM_SALAD, saladId)
-
-            userId?.let {
-                builder.appendQueryParameter(SaladDetailActivity.QUERY_PARAM_REFERRER, userId)
-            }
-
-            return builder.build()
-        }
-
-    }
+    private val DYNAMIC_LINK_DOMAIN = "ude3d.app.goo.gl"
+    private val QUERY_PARAM_REFERRER = "referrer"
+    private val QUERY_PARAM_SALAD = "saladId"
 
     private lateinit var presenter: SaladDetailPresenter
 
@@ -88,6 +67,20 @@ class SaladDetailActivity : AppCompatActivity(), SaladDetailPresenter.SaladDetai
         shortenLink(dynamicLinkUri)
     }
 
+    private fun createShareUri(saladId: String, userId: String?): Uri {
+        val builder = Uri.Builder()
+        builder.scheme(getString(R.string.config_scheme))
+                .authority(getString(R.string.config_host))
+                .appendPath(getString(R.string.config_path_salads))
+                .appendQueryParameter(QUERY_PARAM_SALAD, saladId)
+
+        userId?.let {
+            builder.appendQueryParameter(QUERY_PARAM_REFERRER, userId)
+        }
+
+        return builder.build()
+    }
+
     private fun shortenLink(dynamicLinkUri: Uri) {
         FirebaseDynamicLinks.getInstance().createDynamicLink()
                 .setLongLink(dynamicLinkUri)
@@ -106,7 +99,7 @@ class SaladDetailActivity : AppCompatActivity(), SaladDetailPresenter.SaladDetai
     private fun createDynamicUri(myUri: Uri): Uri {
         val dynamicLink = FirebaseDynamicLinks.getInstance().createDynamicLink()
                 .setLink(myUri)
-                .setDynamicLinkDomain(SaladDetailActivity.DYNAMIC_LINK_DOMAIN)
+                .setDynamicLinkDomain(DYNAMIC_LINK_DOMAIN)
                 .setAndroidParameters(DynamicLink.AndroidParameters.Builder().build())
                 .buildDynamicLink()
         return dynamicLink.uri
@@ -114,7 +107,7 @@ class SaladDetailActivity : AppCompatActivity(), SaladDetailPresenter.SaladDetai
 
     private fun createShareUri(saladId: String): Uri {
         val userId = FirebaseAuth.getInstance().currentUser?.uid
-        return SaladDetailActivity.createShareUri(saladId, userId)
+        return createShareUri(saladId, userId)
     }
 
     override fun setTitle(text: String) {

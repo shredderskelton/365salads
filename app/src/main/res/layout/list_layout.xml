@@ -5,8 +5,17 @@
     android:layout_height="wrap_content"
     android:paddingTop="8dp"
     android:paddingBottom="8dp"
+    android:gravity="center_vertical"
     android:paddingLeft="4dp"
     android:paddingRight="4dp">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/ic_checked" />
 
     <TextView
         android:id="@+id/textView"
@@ -15,10 +24,15 @@
         android:text="Medium Text"
         android:layout_width="wrap_content" />
 
-    <ImageView
-        android:id="@+id/imageView"
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_weight="1" />
+
+    <Button
+        android:id="@+id/viewButton"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:src="@drawable/ic_checked" />
+        android:text="view" />
 </LinearLayout>

@@ -2,6 +2,7 @@ package com.kan.salads
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import com.kan.salads.activity.saladdetails.SaladDetailActivityArgs
 import kotlinx.android.synthetic.main.list_layout.view.*
 
 class SaladViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -18,6 +19,9 @@ class SaladViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         }
         itemView.setOnClickListener {
             onClicked(item)
+        }
+        itemView.viewButton.setOnClickListener {
+            SaladDetailActivityArgs(item.salad.uuid).launch(itemView.context)
         }
     }
 
@@ -37,7 +41,7 @@ class SaladViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
 
     private fun setDeSelected() {
-        itemView.imageView.visibility = View.GONE
+        itemView.imageView.visibility = View.INVISIBLE
     }
 
     var onItemSelected: (itemId: String) -> Unit = { println("In viewholder") }

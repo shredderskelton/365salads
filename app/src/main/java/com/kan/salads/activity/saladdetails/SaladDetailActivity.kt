@@ -8,6 +8,7 @@ import android.view.MenuItem
 import com.google.android.gms.appinvite.AppInviteReferral
 import com.google.firebase.dynamiclinks.DynamicLink
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
+import com.kan.salads.BuildConfig
 import com.kan.salads.R
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_details.*
@@ -37,7 +38,6 @@ class SaladDetailActivity : AppCompatActivity(), SaladDetailPresenter.SaladDetai
             val link = AppInviteReferral.getDeepLink(intent)
             Timber.d("Deep Link: $link")
             val uri = Uri.parse(link)
-            referrer = uri.getQueryParameter(QUERY_PARAM_REFERRER)
             val salad = uri.getQueryParameter(QUERY_PARAM_SALAD)
             salad
         } else {
@@ -47,13 +47,10 @@ class SaladDetailActivity : AppCompatActivity(), SaladDetailPresenter.SaladDetai
         presenter = SaladDetailPresenter(this, saladId)
 
         fab.setOnClickListener {
-            share(args.saladId)
+            share(saladId)
         }
 
-//        ViewCompat.setOnApplyWindowInsetsListener(contentText) { v, insets ->
-//            v.setPadding(v.paddingLeft, v.paddingTop, v.paddingRight, insets.systemWindowInsetBottom)
-//            insets.consumeSystemWindowInsets()
-//        }
+        versionText.text = BuildConfig.VERSION_CODE.toString()
     }
 
     private fun share(id: String) {

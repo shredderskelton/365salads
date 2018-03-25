@@ -48,14 +48,29 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <TextView
-            android:id="@+id/contentText"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:lineSpacingExtra="8dp"
-            android:padding="@dimen/rhythmEighth"
-            android:text="@string/lorem"
-            android:textSize="16sp" />
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/versionText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="8dp"
+                android:padding="@dimen/rhythmEighth"
+                android:textSize="16sp"
+                tools:text="v123" />
+
+            <TextView
+                android:id="@+id/contentText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="8dp"
+                android:padding="@dimen/rhythmEighth"
+                android:text="@string/lorem"
+                android:textSize="16sp" />
+        </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
     <android.support.design.widget.FloatingActionButton

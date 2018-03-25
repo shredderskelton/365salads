@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Daily Salad</string>
+    <string name="app_name">365 Salads</string>
     <string name="login_with_google">Login with Google</string>
     <string name="login_heading">Sign up now to order your first fresh salad!</string>
     <string name="login_with_facebook">Login with Facebook</string>

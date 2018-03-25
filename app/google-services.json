@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "304214173886-3lee6ja850cc8hdqs26rffmva3kroqcb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kan.salads",
+            "certificate_hash": "402d2c1dd4f21b8be5043cc4fa491906685383e7"
+          }
+        },
+        {
+          "client_id": "304214173886-89qb0cshad2p2al0gg5nb1b3io6ftsct.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kan.salads",
+            "certificate_hash": "34b695198ff6abce1694283f467f23a21bf6ee89"
+          }
+        },
+        {
           "client_id": "304214173886-g7hcflevssvur80be9t05f9ccec6j0al.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

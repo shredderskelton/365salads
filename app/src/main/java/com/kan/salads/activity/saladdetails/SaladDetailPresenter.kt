@@ -1,13 +1,26 @@
 package com.kan.salads.activity.saladdetails
 
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.kan.salads.model.Salad
 import timber.log.Timber
 
-class SaladDetailPresenter(val view: SaladDetailView, saladId: String) {
+class SaladDetailPresenter(val view: SaladDetailView, private val saladId: String) {
     private val firebaseData: DatabaseReference = FirebaseDatabase.getInstance().reference
+    private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
 
     init {
+        val currentUser = firebaseAuth.currentUser
+        if (currentUser == null) {
+            firebaseAuth.signInAnonymously().addOnCompleteListener {
+                updateUI()
+            }
+        } else {
+            updateUI()
+        }
+    }
+
+    private fun updateUI() {
         val listener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 

@@ -1,15 +1,14 @@
 package com.kan.salads.activity.saladdetails
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.google.android.gms.appinvite.AppInviteReferral
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.dynamiclinks.DynamicLink
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import com.kan.salads.R
-import com.kan.salads.shareText
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_details.*
 import timber.log.Timber
@@ -67,29 +66,28 @@ class SaladDetailActivity : AppCompatActivity(), SaladDetailPresenter.SaladDetai
         shortenLink(dynamicLinkUri)
     }
 
-    private fun createShareUri(saladId: String, userId: String?): Uri {
+    private fun createShareUri(saladId: String): Uri {
         val builder = Uri.Builder()
-        builder.scheme(getString(R.string.config_scheme))
-                .authority(getString(R.string.config_host))
-                .appendPath(getString(R.string.config_path_salads))
+        builder.scheme(getString(R.string.config_scheme)) // "http"
+                .authority(getString(R.string.config_host)) // "365salads.xyz"
+                .appendPath(getString(R.string.config_path_salads)) // "salads"
                 .appendQueryParameter(QUERY_PARAM_SALAD, saladId)
-
-        userId?.let {
-            builder.appendQueryParameter(QUERY_PARAM_REFERRER, userId)
-        }
-
         return builder.build()
     }
 
-    private fun shortenLink(dynamicLinkUri: Uri) {
+    private fun shortenLink(linkUri: Uri) {
         FirebaseDynamicLinks.getInstance().createDynamicLink()
-                .setLongLink(dynamicLinkUri)
+                .setLongLink(linkUri)
                 .buildShortDynamicLink()
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         val shortLink = task.result.shortLink
-                        Timber.d("Shortlink: $shortLink")
-                        shareText("Hey, check out this nutritious salad I found: $shortLink")
+                        val msg = "Hey, check out this nutritious salad I found: $shortLink"
+                        val sendIntent = Intent()
+                        sendIntent.action = Intent.ACTION_SEND
+                        sendIntent.putExtra(Intent.EXTRA_TEXT, msg)
+                        sendIntent.type = "text/plain"
+                        startActivity(sendIntent)
                     } else {
                         Timber.e(task.exception)
                     }
@@ -101,14 +99,15 @@ class SaladDetailActivity : AppCompatActivity(), SaladDetailPresenter.SaladDetai
                 .setLink(myUri)
                 .setDynamicLinkDomain(DYNAMIC_LINK_DOMAIN)
                 .setAndroidParameters(DynamicLink.AndroidParameters.Builder().build())
+//                .setIosParameters(DynamicLink.IosParameters.Builder("ibi").build())
                 .buildDynamicLink()
         return dynamicLink.uri
     }
 
-    private fun createShareUri(saladId: String): Uri {
-        val userId = FirebaseAuth.getInstance().currentUser?.uid
-        return createShareUri(saladId, userId)
-    }
+//    private fun createShareUri(saladId: String): Uri {
+//        val userId = FirebaseAuth.getInstance().currentUser?.uid
+//        return createShareUri(saladId, userId)
+//    }
 
     override fun setTitle(text: String) {
         initToolbar(text)

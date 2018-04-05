@@ -5,7 +5,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
-import com.google.android.gms.appinvite.AppInviteReferral
 import com.google.firebase.dynamiclinks.DynamicLink
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import com.kan.salads.BuildConfig
@@ -18,39 +17,37 @@ import timber.log.Timber
 class SaladDetailActivity : AppCompatActivity(), SaladDetailPresenter.SaladDetailView {
 
     private val DYNAMIC_LINK_DOMAIN = "ude3d.app.goo.gl"
-    private val QUERY_PARAM_REFERRER = "referrer"
     private val QUERY_PARAM_SALAD = "saladId"
 
     private lateinit var presenter: SaladDetailPresenter
-
-    private var referrer: String? = null
 
     private val args by lazy {
         SaladDetailActivityArgs.deserializeFrom(intent)
     }
 
-    @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_details)
-
-        val saladId = if (AppInviteReferral.hasReferral(intent)) {
-            val link = AppInviteReferral.getDeepLink(intent)
-            Timber.d("Deep Link: $link")
-            val uri = Uri.parse(link)
-            val salad = uri.getQueryParameter(QUERY_PARAM_SALAD)
-            salad
-        } else {
-            args.saladId
+        FirebaseDynamicLinks.getInstance().getDynamicLink(intent).addOnFailureListener {
+            // error
+            Timber.e(it)
+        }.addOnSuccessListener {
+            // deep link
+            val saladId = if (it == null) {
+                args.saladId
+            } else {
+                it.link.getQueryParameter(QUERY_PARAM_SALAD)
+            }
+            init(saladId)
         }
+    }
 
-        presenter = SaladDetailPresenter(this, saladId)
-
-        fab.setOnClickListener {
-            share(saladId)
-        }
-
+    fun init(extractedSaladId: String) {
+        presenter = SaladDetailPresenter(this, extractedSaladId)
         versionText.text = BuildConfig.VERSION_CODE.toString()
+        fab.setOnClickListener {
+            share(extractedSaladId)
+        }
     }
 
     private fun share(id: String) {
@@ -95,8 +92,9 @@ class SaladDetailActivity : AppCompatActivity(), SaladDetailPresenter.SaladDetai
         val dynamicLink = FirebaseDynamicLinks.getInstance().createDynamicLink()
                 .setLink(myUri)
                 .setDynamicLinkDomain(DYNAMIC_LINK_DOMAIN)
-                .setAndroidParameters(DynamicLink.AndroidParameters.Builder().build())
-//                .setIosParameters(DynamicLink.IosParameters.Builder("ibi").build())
+                .setAndroidParameters(DynamicLink.AndroidParameters.Builder()
+                        .build())
+//                .setIosParameters(DynamicLink.IosParameters.Builder("ibi").setFallbackUrl()build())
                 .buildDynamicLink()
         return dynamicLink.uri
     }

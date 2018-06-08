@@ -6,7 +6,7 @@ apply plugin: 'kotlin-android-extensions'
 
 static def evalVersionCode() {
     def process = "git rev-list --all --count".execute()
-    return process.text.toInteger()
+    return process.text.toInteger() + 30
 }
 
 android {

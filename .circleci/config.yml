@@ -1,10 +1,5 @@
 version: 2
 jobs:
-  dependencies:
-    pre:
-    # decrypt the checked in keys
-    - openssl aes-256-cbc -d -out ../signing/publish/play-store-deployment.json -in ../signing/publish/play-store-deployment-encrypted.json -k $KEY
-    - openssl aes-256-cbc -d -out ../signing/release/salads-release-key.jks -in ../signing/release/salads-release-key-encrypted.jks -k $KEY
   build:
     working_directory: ~/code
     docker:
@@ -15,9 +10,12 @@ jobs:
       - checkout
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
-#      - run:
-#         name: Chmod permissions #if permission for Gradlew Dependencies fail, use this.
-#         command: sudo chmod +x ./gradlew
+      - run:
+          name: Decrypting deployment key
+          command: openssl aes-256-cbc -d -out ../signing/publish/play-store-deployment.json -in ../signing/publish/play-store-deployment-encrypted.json -k $KEY
+      - run:
+          name: Decrypting release build key
+          command: openssl aes-256-cbc -d -out ../signing/release/salads-release-key.jks -in ../signing/release/salads-release-key-encrypted.jks -k $KEY
       - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies

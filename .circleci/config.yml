@@ -11,11 +11,20 @@ jobs:
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
-          name: Decrypting deployment key
-          command: openssl aes-256-cbc -d -out ../signing/publish/play-store-deployment.json -in ../signing/publish/play-store-deployment-encrypted.json -k $KEY
+         name: Decrypting deployment key
+         command: openssl aes-256-cbc -d -md sha256 -in signing/publish/play-store-deployment-encrypted.json -out signing/publish/play-store-deployment-64.json -k $KEY
+      - run:
+         name: Decrypting deployment key from base 64
+         command: base64 --decode signing/publish/play-store-deployment-64.json > signing/publish/play-store-deployment.json
       - run:
           name: Decrypting release build key
-          command: openssl aes-256-cbc -d -out ../signing/release/salads-release-key.jks -in ../signing/release/salads-release-key-encrypted.jks -k $KEY
+          command: openssl aes-256-cbc -d -md sha256 -out signing/release/salads-release-key-64.jks -in signing/release/salads-release-key-encrypted.jks -k $KEY
+      - run:
+          name: Decrypting release build key from base 64
+          command: base64 --decode signing/release/salads-release-key-64.jks > signing/release/salads-release-key.jks
+      - store_artifacts:
+          path: signing
+          destination: encr
       - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
@@ -23,14 +32,14 @@ jobs:
           paths:
             - ~/.gradle
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
-      - run:
-          name: Run Tests
-          command: ./gradlew lint test
-      - store_artifacts:
-          path: app/build/reports
-          destination: reports
-      - store_test_results:
-          path: app/build/test-results
+#      - run:
+#          name: Run Tests
+#          command: ./gradlew lint test
+#      - store_artifacts:
+#          path: app/build/reports
+#          destination: reports
+#      - store_test_results:
+#          path: app/build/test-results
       - run:
           name: Deploy Release
-          command: ./gradlew publishApkRelease -PdeployJsonFile="$DEPLOY_KEY" -PkeyAlias="$RELEASE_ALIAS" -PkeyPassword="$RELEASE_PASSWORD" -PstoreFile="$RELEASE_KEY_FILE" -PstorePassword="$RELEASE_STORE_PASSWORD"
+          command: ./gradlew publishApkRelease -PdeployJsonFile="../signing/publish/play-store-deployment.json" -PkeyAlias="$RELEASE_ALIAS" -PkeyPassword="$RELEASE_PASSWORD" -PstoreFile="../signing/release/salads-release-key.jks" -PstorePassword="$RELEASE_STORE_PASSWORD"

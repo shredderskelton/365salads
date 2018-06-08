@@ -8,3 +8,4 @@
 .externalNativeBuild
 signing/release/salads-release-key.jks
 signing/publish/play-store-deployment.json
+.gradletasknamecache

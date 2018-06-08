@@ -7,3 +7,4 @@
 /captures
 .externalNativeBuild
 signing/release
+signing/publish

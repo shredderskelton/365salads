@@ -22,10 +22,7 @@ jobs:
       - run:
           name: Decrypting release build key from base 64
           command: base64 --decode signing/release/salads-release-key-64.jks > signing/release/salads-release-key.jks
-      - store_artifacts:
-          path: signing
-          destination: encr
-      - run:
+       - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
       - save_cache:

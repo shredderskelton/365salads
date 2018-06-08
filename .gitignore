@@ -6,5 +6,5 @@
 /build
 /captures
 .externalNativeBuild
-signing/release
-signing/publish
+signing/release/salads-release-key.jks
+signing/publish/play-store-deployment.json

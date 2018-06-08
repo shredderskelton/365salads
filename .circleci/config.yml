@@ -1,5 +1,10 @@
 version: 2
 jobs:
+  dependencies:
+    pre:
+    # decrypt the checked in keys
+    - openssl aes-256-cbc -d -out ../signing/publish/play-store-deployment.json -in ../signing/publish/play-store-deployment-encrypted.json -k $KEY
+    - openssl aes-256-cbc -d -out ../signing/release/salads-release-key.jks -in ../signing/release/salads-release-key-encrypted.jks -k $KEY
   build:
     working_directory: ~/code
     docker:
@@ -28,3 +33,6 @@ jobs:
           destination: reports
       - store_test_results:
           path: app/build/test-results
+      - run:
+          name: Deploy Release
+          command: ./gradlew publishApkRelease -PdeployJsonFile="$DEPLOY_KEY" -PkeyAlias="$RELEASE_ALIAS" -PkeyPassword="$RELEASE_PASSWORD" -PstoreFile="$RELEASE_KEY_FILE" -PstorePassword="$RELEASE_STORE_PASSWORD"

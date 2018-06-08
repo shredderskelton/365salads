@@ -53,7 +53,8 @@ android {
     }
 
     dexOptions {
-        preDexLibraries false
+        //don't pre dex on the ci build - pointless and takes extra time
+        preDexLibraries !project.hasProperty("isCiBuild")
         javaMaxHeapSize "12g"
     }
 }

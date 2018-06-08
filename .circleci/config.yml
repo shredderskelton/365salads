@@ -42,4 +42,4 @@ jobs:
 #          path: app/build/test-results
       - run:
           name: Deploy Release
-          command: ./gradlew publishApkRelease -PdeployJsonFile="../signing/publish/play-store-deployment.json" -PkeyAlias="$RELEASE_ALIAS" -PkeyPassword="$RELEASE_PASSWORD" -PstoreFile="../signing/release/salads-release-key.jks" -PstorePassword="$RELEASE_STORE_PASSWORD"
+          command: ./gradlew publishApkRelease -PdeployJsonFile="../signing/publish/play-store-deployment.json" -PkeyAlias="$RELEASE_ALIAS" -PkeyPassword="$RELEASE_PASSWORD" -PstoreFile="../signing/release/salads-release-key.jks" -PstorePassword="$RELEASE_STORE_PASSWORD" -PisCiBuild="$CI"

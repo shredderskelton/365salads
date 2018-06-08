@@ -6,7 +6,7 @@ import com.google.firebase.database.DatabaseReference
 class DatabasePrimer {
 
     fun loadDatabase(firebaseData: DatabaseReference) {
-        val availableSalads: List<Salad> = mutableListOf(
+        val availableSalads: List<Salad> = listOf(
                 Salad("Gherkin", "Fresh and delicious"),
                 Salad("Lettuce", "Easy to prepare"),
                 Salad("Tomato", "Boring but healthy"),
@@ -14,8 +14,10 @@ class DatabasePrimer {
         )
         availableSalads.forEach {
             val key = firebaseData.child("salads").push().key
-            it.uuid = key
-            firebaseData.child("salads").child(key).setValue(it)
+            if (key != null) {
+                it.uuid = key
+                firebaseData.child("salads").child(key).setValue(it)
+            }
         }
     }
 }

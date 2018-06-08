@@ -18,7 +18,9 @@ class UserDataHandler(dataChanged: (newData:HashSet<String>) -> Unit) {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             data.clear()
             for (postSnapshot in dataSnapshot.children) {
-                data.add(postSnapshot.key)
+                postSnapshot.key?.let {
+                    data.add(it)
+                }
             }
             dataChanged(data)
         }
